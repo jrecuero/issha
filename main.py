@@ -23,10 +23,10 @@ class MainFrame(wx.Frame):
     
     def createControlButtons(self):
         buttonSizer    = wx.GridSizer(rows=5, cols=3)        
-        upButton       = self.createButton('Up', self.OnButton)
-        leftButton     = self.createButton('Left', self.OnButton)
-        rightButton    = self.createButton('Right', self.OnButton)
-        downButton     = self.createButton('Down', self.OnButton)
+        upButton       = self.createButton('Up', self.OnUpButton)
+        leftButton     = self.createButton('Left', self.OnLeftButton)
+        rightButton    = self.createButton('Right', self.OnRightButton)
+        downButton     = self.createButton('Down', self.OnDownButton)
         partyButton    = self.createButton('Party', self.OnButton)
         mapButton      = self.createButton('Map', self.OnButton)
         questButton    = self.createButton('Quest', self.OnButton)
@@ -56,6 +56,18 @@ class MainFrame(wx.Frame):
     
     def OnButton(self, event):
         pass
+    
+    def OnUpButton(self, event):
+        self.gamePanel.moveMainActor(wx.UP)
+    
+    def OnDownButton(self, event):
+        self.gamePanel.moveMainActor(wx.DOWN)
+    
+    def OnRightButton(self, event):
+        self.gamePanel.moveMainActor(wx.RIGHT)
+    
+    def OnLeftButton(self, event):
+        self.gamePanel.moveMainActor(wx.LEFT)
 
         
 class GamePanel(wx.Panel):
@@ -66,7 +78,6 @@ class GamePanel(wx.Panel):
         """ Class initialization method. It display main game elements.
         """
         wx.Panel.__init__(self, parent)
-        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
                 
         self.timer = wx.Timer(self)
@@ -85,20 +96,18 @@ class GamePanel(wx.Panel):
         """
         pass
     
-    def OnKeyDown(self, event):
+    def moveMainActor(self, keyCode):
         """ Handle key pressed by the user.
         """
-        keyCode = event.GetKeyCode()
-        if keyCode == wx.WXK_NUMPAD6:
+        if keyCode == wx.RIGHT:
             self.image['x'] += 16
-        elif keyCode == wx.WXK_NUMPAD4:
+        elif keyCode == wx.LEFT:
             self.image['x'] -= 16
-        elif keyCode == wx.WXK_NUMPAD8:
+        elif keyCode == wx.UP:
             self.image['y'] -= 16
-        elif keyCode == wx.WXK_NUMPAD2:
+        elif keyCode == wx.DOWN:
             self.image['y'] += 16
         self.Refresh()
-        event.Skip()  
     
     def OnPaint(self, event):
         """ Paint on the GamePanel.
