@@ -1,5 +1,79 @@
 import wx
 
+#------------------------------------------------------------------------------
+class Cell(object):
+    """ Cell class contains all information related with a graphical cell.
+
+    Cell contains information about the graphical cell and game information
+    related with that position.
+    """
+
+    def __init__(self, x, y, gX=None, gY=None):
+        """ Cell class initialization method.
+        """
+        self.setPos(x, y)
+        self.setGPos(gX, gY)
+
+    def setPost(self, x, y):
+        """ Set cell in game position.
+
+        :type x: int
+        :param x: In game x-coordinate.
+
+        :type y: int
+        :param y: In game y-coordinate.
+        """
+        self.pos = (x, y)
+
+    def setGPos(self, gX, gY):
+        """ Set cell graphical position.
+
+        :type gX: int
+        :param gX: Graphical x-coordinate.
+
+        :type gY: int
+        :param gY: Graphical y-coordinate.
+        """
+        self.gpos = (gX, gY)
+
+    @property
+    def x(self):
+        """ Get in game x-coordinate.
+
+        :rtype: int
+        :return: In game x-coordinate.
+        """
+        return self.pos[0]
+
+    @property
+    def y(self):
+        """ Get in game y-coordinate.
+
+        :rtype: int
+        :return: In game y-coordinate.
+        """
+        return self.pos[1]
+
+    @property
+    def gx(self):
+        """ Get graphical x-coordinate.
+
+        :rtype: int
+        :return: Graphical x-coordinate.
+        """
+        return self.gpos[0]
+
+    @property
+    def gy(self):
+        """ Get graphical y-coordinate.
+
+        :rtype: int
+        :return: Graphical y-coordinate.
+        """
+        return self.gpos[1]
+
+
+#------------------------------------------------------------------------------
 class MainFrame(wx.Frame):
     """ Class with the main frame used by the game.
     """
@@ -70,6 +144,7 @@ class MainFrame(wx.Frame):
         self.gamePanel.moveMainActor(wx.LEFT)
 
         
+#------------------------------------------------------------------------------
 class GamePanel(wx.Panel):
     """ Class with the Main Game Panel.
     """
